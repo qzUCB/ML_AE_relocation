@@ -5,12 +5,9 @@ clc
 kfun = 'linear';
 KFolds = 10;
 %% ========================= load training data ===========================
-    [trainingData,...
-    actual_coor_data_repeat,...
-    t_arri_indx_data_repeat,...
-    t_arri_indx_train,...
-    actual_coor_train] = load_training_data;
-%% ====================== training and validation =========================
+load('AE_train.mat')
+
+%% ===================== training and validation z ========================
 inputTable = array2table(trainingData', 'VariableNames', {'trel1', 'trel2', 'trel3', 'trel4', 'trel5', 'trel6', 'trel7', 'trel8', 'trel9', 'trel10', 'trel11', 'coorx', 'coorz'});
 predictorNames = {'trel1', 'trel2', 'trel3', 'trel4', 'trel5', 'trel6', 'trel7', 'trel8', 'trel9', 'trel10', 'trel11'};
 predictors = inputTable(:, predictorNames);
@@ -91,7 +88,7 @@ zepsilon = (responseScale/13.49)*(1+0.1*(c-5));
 zKernelScale = 0.1*(1+0.1*(p-5));
 optzRMSE = zvalidationRMSE(r,c,p)
         
-%% ====================================== x ===============================
+%% ===================== training and validation x ========================
 response = inputTable.coorx;
 responseScale = iqr(response);
 % optimizing boxConstraint, epsilon, and KernelScale
@@ -175,61 +172,11 @@ xepsilon = (responseScale/13.49)*(1+0.1*(c-5));
 xKernelScale = 0.1*(1+0.1*(p-5));
 optxRMSE = xvalidationRMSE(r,c,p)
 
-%% show predictions on training data
-L = 218;
-H = 200;
-edge_clrs = {'none',[0 .5 1],[1 .4 .2],[0 .8 .4],[.8 .2 .6],[1 .6 .2]};
-face_clrs = {'none', [.5 .5 .5],[43,131,186]./255,[215,25,28]./255};
-mksz = 5;
-ztrainpredict = zregressionSVMmodel.predictFcn(t_arri_indx_train);
-xtrainpredict = xregressionSVMmodel.predictFcn(t_arri_indx_train);
-fh = figure(10); % fault normal view
-set(fh, 'Position', [1620 600 550 450] );
-hold on
-box on
-axis equal
-set(gca,'TickDir','out');
-plot([0,sqrt((L)^2+(L)^2),sqrt((L)^2+(L)^2),0,0],[0,0,H,H,0],'b-','LineWidth',2)
-plot([sqrt(2)*L/2-75,sqrt(2)*L/2,sqrt(2)*L/2,sqrt(2)*L/2-75,sqrt(2)*L/2-75],[H-16,H-16,H,H,H-16],'b-','LineWidth',2)
-text(1,207,'SW')
-text(291,207,'NE')
-grid on
-grid minor
-
-output = [];
-output(3,:) = ztrainpredict; % z
-output(1,:) = xtrainpredict; % x
-output(2,:) = L - output(1,:); % y
-for i = 1:length(xtrainpredict)
-    x_on_fault = (L+output(1,i)-output(2,i))/2;
-    % y_on_fault = L-x_on_fault;
-    dist_on_fault = sqrt(2)*(L-x_on_fault);
-    x_on_fault_train = (L+actual_coor_train(1,i)-actual_coor_train(2,i))/2;
-    dist_on_fault_train = sqrt(2)*(L-x_on_fault_train);
-    plot(actual_coor_train(1,i),actual_coor_train(2,i),'bo','markerfacecolor',face_clrs{1},'markerEdgecolor',edge_clrs{2},'MarkerSize',mksz,'Linewidth',1.5)
-    plot(dist_on_fault,output(3,i),'ro','markerfacecolor',face_clrs{2},'markerEdgecolor',edge_clrs{1},'MarkerSize',mksz,'Linewidth',1.5)
-end
-zreppredict = zregressionSVMmodel.predictFcn(t_arri_indx_data_repeat);
-xreppredict = xregressionSVMmodel.predictFcn(t_arri_indx_data_repeat);
-output = [];
-output(3,:) = zreppredict; % z
-output(1,:) = xreppredict; % x
-output(2,:) = L - output(1,:); % y
-for i = 1:length(xreppredict)
-    x_on_fault = (L+output(1,i)-output(2,i))/2;
-    % y_on_fault = L-x_on_fault;
-    dist_on_fault = sqrt(2)*(L-x_on_fault);
-    plot(dist_on_fault,output(3,i),'bo','markerfacecolor',face_clrs{3},'markerEdgecolor',edge_clrs{1},'MarkerSize',mksz,'Linewidth',1.5)
-%     plot(actual_coor_data_repeat(1,i),actual_coor_data_repeat(2,i),'bo','markerfacecolor',face_clrs{1},'markerEdgecolor',edge_clrs{3},'MarkerSize',mksz,'Linewidth',1.5)
-end
-xlabel('Fault axis, x (mm)')
-ylabel('Height, z (mm)')
-
 %% ============================= application ==============================
 % load testing data
-[N, slip_test_data] = load_AE_test_data;
-zpredict = zregressionSVMmodel.predictFcn(slip_test_data');
-xpredict = xregressionSVMmodel.predictFcn(slip_test_data');
+load('AE_test_arrivals.mat')
+zpredict = zregressionSVMmodel.predictFcn(slip_test_data);
+xpredict = xregressionSVMmodel.predictFcn(slip_test_data);
 
 % plot
 plotonfault(xpredict,zpredict)

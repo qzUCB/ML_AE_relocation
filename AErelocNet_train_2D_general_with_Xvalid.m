@@ -1,6 +1,6 @@
 % data preparation for AE relocation using nueral networks
 clear all;
-% close all;
+close all;
 clc
 
 KFolds = 10;
@@ -9,11 +9,7 @@ numNeural = 12;
 MaxEpochs = 100;
 
 %% data for training
-    [trainingData,...
-    actual_coor_data_repeat,...
-    t_arri_indx_data_repeat,...
-    t_arri_indx_train,...
-    actual_coor_train] = load_training_data;
+load('AE_train.mat')
 
 %% divide data into 10 groups for kfold cross-validation
 actual_coor_train_all = actual_coor_train';

@@ -2,13 +2,14 @@ close all
 clear all
 clc
 
-% perturbation to arrival picking
+%% perturbation to arrival picking
 pt = 1; % microsecond
 % NOTE: result may vary depends on the randomly generated purturbation. The overall trend should be the same.
 
 
-%%
-[trainingData,actual_coor_data_repeat,t_arri_indx_data_repeat,t_arri_indx_train,actual_coor_train] = load_training_data;
+%% ========================= load training data ===========================
+load('AE_train.mat')
+
 load('SVMmodels.mat')
 
 % face_clrs = {'none','none','none','none'};

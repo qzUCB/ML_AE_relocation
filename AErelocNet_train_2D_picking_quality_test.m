@@ -1,11 +1,15 @@
-%% ================ test perturbed arrival time ===========================
 close all
+clear all
+clc
 
-[trainingData,actual_coor_data_repeat,t_arri_indx_data_repeat,t_arri_indx_train,actual_coor_train] = load_training_data;
-
-% add perturbation to arrival picking
+%% add perturbation to arrival picking
 pt = 3; % microsecond
 % NOTE: result may vary depends on the randomly generated purturbation. The overall trend should be the same.
+
+
+%% ================ test perturbed arrival time ===========================
+load('AE_train.mat')
+
 if pt == 0
     t_arri_indx_data_repeat_peturb(2:11,:) = t_arri_indx_data_repeat(2:11,:);
     t_arri_indx_train_peturb(2:11,:) = t_arri_indx_train(2:11,:);
@@ -19,7 +23,7 @@ else
     t_arri_indx_train_peturb =t_arri_indx_train;
     t_arri_indx_train_peturb(2:11,:) = pterb(1:10,:)+t_arri_indx_train_peturb(2:11,:);
 end
-load('C:\experiment\software\AE_MATLAB_code\AE_relocation\ML_AE_relocation\AErelocNet_2D_Deploy.mat');
+load('AErelocNet_2D_Deploy.mat');
 numNets = length(nets);
 perfs = zeros(1, numNets);
 y2Total = 0;
@@ -211,5 +215,5 @@ hconf = plot(xfit,Y+DELTA,'b-');
 plot(xfit,Y-DELTA,'b-')
 
 %% print
-print(figure(11),'-dpdf','-r300',['./training_ANN_x_perturb_' num2str(pt) '_us.pdf'])
-print(figure(12),'-dpdf','-r300',['./training_ANN_z_perturb_' num2str(pt) '_us.pdf'])
+% print(figure(11),'-dpdf','-r300',['./training_ANN_x_perturb_' num2str(pt) '_us.pdf'])
+% print(figure(12),'-dpdf','-r300',['./training_ANN_z_perturb_' num2str(pt) '_us.pdf'])
