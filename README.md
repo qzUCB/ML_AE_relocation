@@ -1,5 +1,5 @@
 # ML_AE_relocation
-Use machine learning methods to relocate acoustic emission events on a laboratory fault surface.
+Use machine learning (ML) methods to relocate acoustic emission (AE) events on a laboratory fault surface.
 
 ## File description
 
@@ -23,3 +23,4 @@ fault_surf_impose.jpg - Relocated AE locations plotted  on top of the image of t
 sample_after_slip.jpg - Raw image of the laboratory fault after the slip test.
 
 ## To use
+The ML methods are realized using MATLAB.
