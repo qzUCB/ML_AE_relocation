@@ -5,8 +5,6 @@ Use machine learning (ML) methods to relocate acoustic emission (AE) events on a
 
 ### Data files:
 
-* AE_locations.mat
-
 * AE_test_arrivals.mat - P-wave arrival pickings of 96 AE events recorded during the slip test.
 
 * AE_train.mat - Locations (x,z) of pencil break events in the training data and their relative P-wave arrival pickings.
