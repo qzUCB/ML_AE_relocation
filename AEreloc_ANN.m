@@ -1,4 +1,4 @@
-% slip test AE events relocation with machine learning
+% slip test AE events relocation with machine learning ANN
 
 %% ========================================================================
 %  z (mm)
