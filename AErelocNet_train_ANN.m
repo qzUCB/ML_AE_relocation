@@ -19,26 +19,14 @@ load('AE_train.mat')
 trainFcn = 'trainbr';  % Bayesian Regularization backpropagation.
 net = fitnet(numNeural,trainFcn);
 net.trainParam.epochs = MaxEpochs; %Maximum number of epochs to train
-
-% Choose Input and Output Pre/Post-Processing Functions
-% For a list of all processing functions type: help nnprocess
 net.input.processFcns = {'removeconstantrows','mapminmax'};
 net.output.processFcns = {'removeconstantrows','mapminmax'};
-
-% Setup Division of Data for Training, Validation, Testing
-% For a list of all data division functions type: help nndivision
 net.divideFcn = 'dividerand';  % Divide data randomly
 net.divideMode = 'sample';  % Divide up every sample
 net.divideParam.trainRatio = 100/100;
 net.divideParam.valRatio = 0/100;
 net.divideParam.testRatio = 0/100;
-
-% Choose a Performance Function
-% For a list of all performance functions type: help nnperformance
 net.performFcn = 'mse';  % Mean Squared Error
-
-% Choose Plot Functions
-% For a list of all plot functions type: help nnplot
 net.plotFcns = {'plotperform','plottrainstate','ploterrhist', ...
     'plotregression', 'plotfit'};
 

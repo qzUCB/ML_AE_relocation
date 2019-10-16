@@ -6,15 +6,11 @@ clc
 pt = 1; % microsecond
 % NOTE: result may vary depends on the randomly generated purturbation. The overall trend should be the same.
 
-
 %% ========================= load training data ===========================
 load('AE_train.mat')
 
 load('SVMmodels.mat')
 
-% face_clrs = {'none','none','none','none'};
-% edge_clrs = {[0 .5 1],[1 .4 .2],[0 .8 .4],[.8 .2 .6],[1 .6 .2]};
-% edge_clrs = {[1 .4 .2],[1 .4 .2],[1 .4 .2]};
 face_clrs = {[.5 .5 .5],[43,131,186]./255,[215,25,28]./255};
 edge_clrs = 'none';
 
@@ -27,8 +23,6 @@ if pt == 0
     t_arri_indx_train_peturb(2:11,:) = t_arri_indx_train(2:11,:);
 else
     pterb = randi(round(pt*40),10,8)-round(pt*40)/2;
-    % t_arri_indx_data_test_peturb = t_arri_indx_data_test;
-    % t_arri_indx_data_test_peturb(2:11,:) = pterb(1:10,:)+t_arri_indx_data_test_peturb(2:11,:);
     t_arri_indx_data_repeat_peturb =t_arri_indx_data_repeat;
     t_arri_indx_data_repeat_peturb(2:11,:) = pterb(1:10,:)+t_arri_indx_data_repeat_peturb(2:11,:);
     pterb = randi(round(pt*40),10,56)-round(pt*40)/2;
@@ -37,9 +31,6 @@ else
 end
 
 %% repeatability
-% pterb = randi(round(pt*40),10,8)-round(pt*40)/2;
-% t_arri_indx_data_repeat_peturb =t_arri_indx_data_repeat;
-% t_arri_indx_data_repeat_peturb(2:11,:) = pterb(1:10,:)+t_arri_indx_data_repeat_peturb(2:11,:);
 
 output = [];
 xpredict_repeat = xregressionSVMmodel.predictFcn(t_arri_indx_data_repeat_peturb);
@@ -60,9 +51,6 @@ disp('-------------------------------------------------')
 
 
 %% get R^2
-% pterb = randi(round(pt*40),10,56)-round(pt*40)/2;
-% t_arri_indx_train_peturb =t_arri_indx_train;
-% t_arri_indx_train_peturb(2:11,:) = pterb(1:10,:)+t_arri_indx_train_peturb(2:11,:);
 
 output = [];
 zpredict = zregressionSVMmodel.predictFcn(t_arri_indx_train_peturb);
@@ -70,37 +58,12 @@ output(3,:) = zpredict; % z
 xpredict = xregressionSVMmodel.predictFcn(t_arri_indx_train_peturb);
 output(1,:) = xpredict; % x
 output(2,:) = L - output(1,:); % y
-% for i = 1:length(output(1,:))
-%         x_on_fault = (L+output(1,i)-output(2,i))/2;
-%         dist_on_fault = sqrt(2)*(L-x_on_fault);
-%         plot(dist_on_fault,output(3,i),'ro','markerfacecolor',face_clrs{1},'markerEdgecolor',edge_clrs{1},'MarkerSize',mksz,'Linewidth',1.5)
-% %         text(dist_on_fault+2.5,actual_coor_data(i,3),num2str(i),'FontSize',10)
-% end
 
-% figure(1)
-% for i = 1:N3
-%         x_on_fault = (L+output(1,i)-output(2,i))/2;
-%         dist_on_fault = sqrt(2)*(L-x_on_fault);
-%         plot(dist_on_fault,output(3,i),'bo','markerfacecolor','none','markerEdgecolor',edge_clrs{3},'MarkerSize',mksz,'Linewidth',1.5)
-% end
-% xlabel('Fault axis, x (mm)')
-% ylabel('Height, z (mm)')
 
 %% plot fitting results
 outAvg_all = [output(1,:);output(3,:)];
 perfAvg_all_x = sqrt(sum((actual_coor_train(1,:)-outAvg_all(1,:)).^2)/length(t_arri_indx_train_peturb));
 perfAvg_all_z = sqrt(sum((actual_coor_train(2,:)-outAvg_all(2,:)).^2)/length(t_arri_indx_train_peturb));
-
-% figure(10)
-% hold on
-% plot(1:numNets,perfs_all_x,'ko-','MarkerSize',5,'markerfacecolor','w','markerEdgecolor','k')
-% plot(1:numNets,perfs_all_z,'ko-','MarkerSize',5,'markerfacecolor',[.5 .5 .5],'markerEdgecolor','k')
-% plot(1:numNets,ones(1,numNets)*perfAvg_all_x,'k--','color','k','Linewidth',2)
-% plot(1:numNets,ones(1,numNets)*perfAvg_all_z,'k:','color',[.5 .5 .5],'Linewidth',2)
-% box on
-% xlabel('Nets');
-% ylabel('RMSE (mm)');
-% legend('x single net','z single net','x generalized','z generalized')
 
 x_on_fault = (L+outAvg_all(1,:)-(L-outAvg_all(1,:)))/2;
 dist_on_fault = sqrt(2)*(L-x_on_fault);
@@ -112,8 +75,6 @@ figure(11)
 hold on
 plot([0,300],[0,300],'k:','LineWidth',2)
 plot(dist_on_fault_train,dist_on_fault,'ko','markerfacecolor',face_clrs{1},'markerEdgecolor',edge_clrs,'MarkerSize',mksz,'Linewidth',1.5)
-% plot(actual_coor_data_test(1,:),out_test(1,:),'bs','markerfacecolor','none','markerEdgecolor','k','MarkerSize',mksz+1,'Linewidth',1.5)
-% plot(actual_coor_data_repeat(1,:),out_repeat(1,:),'ko','markerfacecolor','none','markerEdgecolor','k','MarkerSize',mksz+1,'Linewidth',1.5)
 box on
 axis square
 legend('Target:Output = 1:1','Training points','Testing output','Repeatability testing output','Location','SouthEast')
@@ -150,16 +111,10 @@ axis([0 300 0 300])
 hconf = plot(xfit,Y+DELTA,'b-');
 plot(xfit,Y-DELTA,'b-')
 
-% plot as area
-% h = fill([xfit fliplr(xfit)],[Y+DELTA fliplr(Y-DELTA)],'b');
-% set(h,'facealpha',.5)
-
 figure(12)
 hold on
 plot([0,200],[0,200],'k:','LineWidth',2)
 plot(actual_coor_train(2,:),outAvg_all(2,:),'ko','markerfacecolor',face_clrs{1},'markerEdgecolor',edge_clrs,'MarkerSize',mksz,'Linewidth',1.5)
-% plot(actual_coor_data_test(2,:),out_test(2,:),'bs','markerfacecolor','none','markerEdgecolor','k','MarkerSize',mksz+1,'Linewidth',1.5)
-% plot(actual_coor_data_repeat(2,:),out_repeat(2,:),'ko','markerfacecolor','none','markerEdgecolor','k','MarkerSize',mksz+1,'Linewidth',1.5)
 box on
 axis square
 ylabel('Model output z (mm)');

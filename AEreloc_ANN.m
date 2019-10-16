@@ -41,19 +41,7 @@ disp(['--> Relocating ' num2str(N) ' events <--'])
 
 netinput = t_arri_indx(:,:)-t_arri_indx(1,:);
   
-    %% one net
-%     output = AErelocNet_Deploy(netinput);
-    
-    %% generalized nets 3D
-%     outTotal = 0;
-%     for ii = 1:numNN
-%       neti = nets{ii};
-%       out = neti(netinput);
-%       outTotal = outTotal + out;
-%     end
-%     output = outTotal / numNN;
-
-    %% generalized nets 2D
+    % 2D ANN
     outTotal = 0;
     for ii = 1:numNN
       neti = nets{ii};

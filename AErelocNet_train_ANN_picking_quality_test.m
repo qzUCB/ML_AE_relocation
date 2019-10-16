@@ -6,7 +6,6 @@ clc
 pt = 3; % microsecond
 % NOTE: result may vary depends on the randomly generated purturbation. The overall trend should be the same.
 
-
 %% ================ test perturbed arrival time ===========================
 load('AE_train.mat')
 
@@ -27,33 +26,6 @@ load('AErelocNet_2D_Deploy.mat');
 numNets = length(nets);
 perfs = zeros(1, numNets);
 y2Total = 0;
-
-% for i = 1:numNets
-%   neti = nets{i};
-%   out_test = neti(t_arri_indx_data_test_peturb);
-%   perfs(i) = mse(neti, actual_coor_data_test, out_test);
-%   y2Total = y2Total + out_test;
-% end
-% % perfs
-% 
-% outAvg = y2Total / numNets;
-% % perfAvg = mse(nets{1}, actual_coor_data_test, outAvg);
-% 
-% errs  = abs(outAvg-actual_coor_data_test);
-% x_err = errs(1,:);
-% z_err = errs(2,:);
-% disp('------------------- Errors --------------------')
-% disp('       Mean       Max        Min')
-% disp(['x   ' num2str([mean(x_err),max(x_err),min(x_err)])])
-% disp(['z   ' num2str([mean(z_err),max(z_err),min(z_err)])])
-% disp('-----------------------------------------------')
-%                                 
-% for i = 1:N2
-%     x_on_fault = (L+outAvg(1,i)-(L-outAvg(1,i)))/2;
-%     dist_on_fault = sqrt(2)*(L-x_on_fault);
-%     plot(dist_on_fault,outAvg(2,i),'bs','markerfacecolor','none','markerEdgecolor','k','MarkerSize',mksz+1,'Linewidth',1.5)
-% %     text(dist_on_fault+2.5,outAvg(2,i),num2str(i),'FontSize',10)
-% end
 
 perfs_repeat = zeros(1, numNets);
 y2Total_repeat = 0;
@@ -77,13 +49,6 @@ disp(['x   ' num2str([mean(x_err_repeat),max(x_err_repeat),min(x_err_repeat)])])
 disp(['z   ' num2str([mean(z_err_repeat),max(z_err_repeat),min(z_err_repeat)])])
 disp('-------------------------------------------------')
 
-% for i = 1:N3
-%     x_on_fault = (L+outAvg_repeat(1,i)-(L-outAvg_repeat(1,i)))/2;
-%     dist_on_fault = sqrt(2)*(L-x_on_fault);
-%     plot(dist_on_fault,outAvg_repeat(2,i),'ko','markerfacecolor','none','markerEdgecolor','k','MarkerSize',mksz+1,'Linewidth',1.5)
-% %     text(dist_on_fault+2.5,outAvg_repeat(2,i),num2str(i),'FontSize',10)
-% end
-
 %% plot fitting results
 perfs_all_x = zeros(1, numNets);
 perfs_all_z = zeros(1, numNets);
@@ -103,17 +68,6 @@ outAvg_all = y2Total / numNets;
 perfAvg_all_x = sqrt(sum((actual_coor_train(1,:)-outAvg_all(1,:)).^2)/length(t_arri_indx_train));
 perfAvg_all_z = sqrt(sum((actual_coor_train(2,:)-outAvg_all(2,:)).^2)/length(t_arri_indx_train));
 
-% figure(10)
-% hold on
-% plot(1:numNets,perfs_all_x,'ko-','MarkerSize',5,'markerfacecolor','w','markerEdgecolor','k')
-% plot(1:numNets,perfs_all_z,'ko-','MarkerSize',5,'markerfacecolor',[.5 .5 .5],'markerEdgecolor','k')
-% plot(1:numNets,ones(1,numNets)*perfAvg_all_x,'k--','color','k','Linewidth',2)
-% plot(1:numNets,ones(1,numNets)*perfAvg_all_z,'k:','color',[.5 .5 .5],'Linewidth',2)
-% box on
-% xlabel('Nets');
-% ylabel('RMSE (mm)');
-% legend('x single net','z single net','x generalized','z generalized')
-
 face_clrs = {[.5 .5 .5],[43,131,186]./255,[215,25,28]./255};
 edge_clrs = 'none';
 L = 218;
@@ -130,8 +84,6 @@ figure(11)
 hold on
 plot([0,300],[0,300],'k:','LineWidth',2)
 plot(dist_on_fault_train,dist_on_fault,'ko','markerfacecolor',face_clrs{1},'markerEdgecolor',edge_clrs,'MarkerSize',mksz,'Linewidth',1.5)
-% plot(actual_coor_data_test(1,:),out_test(1,:),'bs','markerfacecolor','none','markerEdgecolor','k','MarkerSize',mksz+1,'Linewidth',1.5)
-% plot(actual_coor_data_repeat(1,:),out_repeat(1,:),'ko','markerfacecolor','none','markerEdgecolor','k','MarkerSize',mksz+1,'Linewidth',1.5)
 box on
 axis square
 legend('Target:Output = 1:1','Training points','Testing output','Repeatability testing output','Location','SouthEast')
@@ -176,8 +128,6 @@ figure(12)
 hold on
 plot([0,200],[0,200],'k:','LineWidth',2)
 plot(actual_coor_train(2,:),outAvg_all(2,:),'ko','markerfacecolor',face_clrs{1},'markerEdgecolor',edge_clrs,'MarkerSize',mksz,'Linewidth',1.5)
-% plot(actual_coor_data_test(2,:),out_test(2,:),'bs','markerfacecolor','none','markerEdgecolor','k','MarkerSize',mksz+1,'Linewidth',1.5)
-% plot(actual_coor_data_repeat(2,:),out_repeat(2,:),'ko','markerfacecolor','none','markerEdgecolor','k','MarkerSize',mksz+1,'Linewidth',1.5)
 box on
 axis square
 ylabel('Model output z (mm)');
