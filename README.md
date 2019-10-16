@@ -12,19 +12,19 @@ Use machine learning (ML) methods to relocate acoustic emission (AE) events on a
 * AErelocNet_2D_Deploy.mat - ANNs trained to output AE source location on the laboratory fault (x,z).
 
 ### Code files:
-* AErelocNet_train_ANN.m	
+* AErelocNet_train_ANN.m	- train the ANN model
 
-* AErelocNet_train_ANN_picking_quality_test.m
+* AErelocNet_train_ANN_picking_quality_test.m - check sensitivity of the ANN model to arrival picking quality
 
-* AErelocNet_train_ANN_with_Xvalid.m
+* AErelocNet_train_ANN_with_Xvalid.m  - ANN model accuracy estimation with ten-fold cross-validation
 
-* AEreloc_ANN.m	
+* AEreloc_ANN.m	- apply the ANN model to the deployed ANN model for AE relocation
 
-* AEreloc_SVM_picking_quality_test.m	
+* AEreloc_SVM_picking_quality_test.m	- check sensitivity of the SVM models to arrival picking quality
 
-* AEreloc_single_target_SVM.m	
+* AEreloc_single_target_SVM.m	- train and apply SVM models for AE relocation
 
-* plotonfault.m
+* plotonfault.m - for plotting the AE eveents on the fault surface
 
 ### Image files:
 
@@ -32,6 +32,6 @@ Use machine learning (ML) methods to relocate acoustic emission (AE) events on a
 
 * sample_after_slip.jpg - Raw image of the laboratory fault after the slip test.
 
-## To use
+## Requirement
 
-The ML methods are realized using MATLAB.
+The ML methods are realized using MATLAB R2018a. The MATLAB neural network Toolbox and Statistics and Machine Learning Toolbox are required.
