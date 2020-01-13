@@ -1,7 +1,7 @@
 # ML_AE_relocation
 Use machine learning (ML) methods to relocate acoustic emission (AE) events on a laboratory fault surface.
 
-# Reference:
+## Reference:
 Zhao, Q., Glaser, S.D. Relocating Acoustic Emission in Rocks with Unknown Velocity Structure with Machine Learning. Rock Mech Rock Eng (2019) doi:10.1007/s00603-019-02028-8
 
 ## File description
