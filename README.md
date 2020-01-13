@@ -1,6 +1,9 @@
 # ML_AE_relocation
 Use machine learning (ML) methods to relocate acoustic emission (AE) events on a laboratory fault surface.
 
+Reference:
+Zhao, Q., Glaser, S.D. Relocating Acoustic Emission in Rocks with Unknown Velocity Structure with Machine Learning. Rock Mech Rock Eng (2019) doi:10.1007/s00603-019-02028-8
+
 ## File description
 
 ### Data files:
@@ -16,21 +19,21 @@ Use machine learning (ML) methods to relocate acoustic emission (AE) events on a
 * AE_signal_data.mat - Raw data for traning AE signals, locations and arrival pickings.
 
 ### Code files:
-* AErelocNet_train_ANN.m	- train the ANN model
+* AErelocNet_train_ANN.m	- Train the ANN model
 
-* AErelocNet_train_ANN_picking_quality_test.m - check sensitivity of the ANN model to arrival picking quality.
+* AErelocNet_train_ANN_picking_quality_test.m - Check sensitivity of the ANN model to arrival picking quality.
 
 * AErelocNet_train_ANN_with_Xvalid.m  - ANN model accuracy estimation with ten-fold cross-validation.
 
-* AEreloc_ANN.m	- apply the ANN model to the deployed ANN model for AE relocation.
+* AEreloc_ANN.m	- Apply the ANN model to the deployed ANN model for AE relocation.
 
-* AEreloc_SVM_picking_quality_test.m	- check sensitivity of the SVM models to arrival picking quality.
+* AEreloc_SVM_picking_quality_test.m	- Check sensitivity of the SVM models to arrival picking quality.
 
-* AEreloc_single_target_SVM.m	- train and apply SVM models for AE relocation.
+* AEreloc_single_target_SVM.m	- Train and apply SVM models for AE relocation.
 
-* plotonfault.m - for plotting the AE eveents on the fault surface.
-.
-* disp_signal_and_picking.m - for plotting AE signals and arrivals.
+* plotonfault.m - Function for plotting the AE events on the fault surface.
+
+* disp_signal_and_picking.m - Code for plotting AE signals and arrivals.
 
 ### Image files:
 
