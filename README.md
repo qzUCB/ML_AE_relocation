@@ -14,10 +14,6 @@ Zhao, Q., Glaser, S.D. Relocating Acoustic Emission in Rocks with Unknown Veloci
 
 * AErelocNet_2D_Deploy.mat - ANNs trained to output AE source location on the laboratory fault (x,z).
 
-* AE_sensor_loc.mat - Locations of AE sensors in 3D.
-
-* AE_signal_data.mat - Raw data for traning AE signals, locations and arrival pickings.
-
 ### Code files:
 * AErelocNet_train_ANN.m	- Train the ANN model
 
@@ -33,8 +29,6 @@ Zhao, Q., Glaser, S.D. Relocating Acoustic Emission in Rocks with Unknown Veloci
 
 * plotonfault.m - Function for plotting the AE events on the fault surface.
 
-* disp_signal_and_picking.m - Code for plotting AE signals and arrivals.
-
 ### Image files:
 
 * fault_surf_impose.jpg - Relocated AE locations plotted  on top of the image of the laboratory fault after slip test.
@@ -43,7 +37,16 @@ Zhao, Q., Glaser, S.D. Relocating Acoustic Emission in Rocks with Unknown Veloci
 
 * training_data_on_surf.pdf - Training data on laboratory fault surface with event IDs.
 
-* sensors_on_block.pdf - AE sensors plotted with the rock block in 3D with sensor IDs.
+## Additional data
+Some additional data for the experiment. 12 sensors are used (11 sensors for the work in Zhao & Glaser (2019)). These data are not necessary for reproducing Zhao & Glaser (2019).
+
+* AE_sensor_loc.mat - Locations of AE sensors in 3D.
+
+* AE_signal_data.mat - Raw data for traning AE signals, locations and arrival pickings.
+
+* disp_signal_and_picking.m - Code for plotting AE signals and arrivals.
+
+* sensors_on_block.pdf - AE sensors plotted with the rock block in 3D with sensor IDs (sensor 12 not used in Zhao & Glaser (2019)).
 
 ## Requirement
 
